@@ -1,0 +1,1495 @@
+/* ==========================================================================
+   Hanayome — 花嫁百合文库
+   A wisteria-and-blossom skin for yuri light-novel libraries.
+   Scoped under body.hanayome; loads after bootstrap/style/upload so it wins
+   on equal specificity. Covers the Standard theme's template inventory.
+   ========================================================================== */
+
+/* ---------- Self-hosted type ---------------------------------------------- */
+/* LXGW WenKai (霞鹜文楷): rounded, fluent kai style covering simplified +
+   traditional Chinese. Replaces Noto SC — the client found the geometric
+   sans/serif glyphs too sharp-edged for a light-novel reading room. */
+@font-face{
+  font-family: "LXGW WenKai";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/hanayome/LXGWWenKai-Regular.woff2") format("woff2");
+}@font-face{
+  font-family: "LXGW WenKai";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/hanayome/LXGWWenKai-Medium.woff2") format("woff2");
+}/* ---------- Design tokens ------------------------------------------------ */
+body.hanayome{
+  --hy-paper:        #faf7f4;   /* warm blush paper            */
+  --hy-paper-deep:   #f3eef0;   /* panel / inset wash          */
+  --hy-ink:          #3b3540;   /* soft plum-black text        */
+  --hy-ink-soft:     #6e6572;   /* secondary text              */
+  --hy-ink-faint:    #9b92a0;   /* captions / placeholders     */
+  --hy-wisteria:     #9b7bb5;   /* primary accent — wisteria   */
+  --hy-wisteria-dk:  #7d5f99;   /* hover / active deeper       */
+  --hy-wisteria-lt:  #e9e0f2;   /* tint wash                   */
+  --hy-blossom:      #d98ba6;   /* secondary accent — sakura   */
+  --hy-blossom-lt:   #f6e3ea;   /* tint wash                   */
+  --hy-line:         #e9e1e8;   /* hairline border             */
+  --hy-line-strong:  #d9ccd8;   /* stronger border             */
+  --hy-forest:       #5f8f74;   /* success / read state        */
+  --hy-amber:        #b98a3e;   /* warning                     */
+  --hy-danger:       #c06a6a;   /* danger                      */
+  --hy-cover-shadow: 0 6px 18px -8px rgba(84, 62, 96, .35);
+  --hy-font-serif:   "LXGW WenKai", "Kaiti SC", "STKaiti", "KaiTi", serif;
+  --hy-font-round:   "LXGW WenKai", "Kaiti SC", "STKaiti", "KaiTi", "Microsoft YaHei", sans-serif;
+}/* ---------- Base --------------------------------------------------------- */
+body.hanayome{
+  background: var(--hy-paper);
+  color: var(--hy-ink);
+  font-family: var(--hy-font-round);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}body.hanayome h1, body.hanayome h2, body.hanayome h3, body.hanayome h4, body.hanayome .navbar-brand, body.hanayome .modal-title{
+  font-family: var(--hy-font-serif);
+  color: var(--hy-ink);
+  font-weight: 500;
+  letter-spacing: .03em;
+}body.hanayome h2{
+  font-size: 21px;
+  color: var(--hy-ink);
+}body.hanayome a{
+  color: var(--hy-wisteria-dk);
+  transition: color .15s ease;
+}body.hanayome a:hover, body.hanayome a:focus{
+  color: var(--hy-wisteria);
+  text-decoration: none;
+}/* ---------- Editorial page head (root page only) -------------------------- */
+body.hanayome .hy-pagehead{
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 2px 0 30px;
+  padding: 0 0 22px;
+  border-bottom: 1px solid var(--hy-line);
+}body.hanayome .hy-pagehead-txt{
+  position: relative;
+  z-index: 1;
+}body.hanayome .hy-pagehead-kicker{
+  margin: 0 0 2px;
+  font-size: 12px;
+  letter-spacing: .34em;
+  color: var(--hy-wisteria);
+  text-transform: uppercase;
+}body.hanayome .hy-pagehead-title{
+  margin: 0;
+  font-family: var(--hy-font-serif);
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--hy-ink);
+  line-height: 1.15;
+}body.hanayome .hy-pagehead-side{
+  position: relative;
+  width: 180px;
+  height: 74px;
+  flex: 0 0 auto;
+}body.hanayome .hy-ph-blob{
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: .55;
+}body.hanayome .hy-ph-blob-a{
+  width: 110px;
+  height: 110px;
+  right: 6px;
+  top: -34px;
+  background: radial-gradient(circle at 32% 30%, var(--hy-blossom), var(--hy-blossom-lt) 72%);
+}body.hanayome .hy-ph-blob-b{
+  width: 70px;
+  height: 70px;
+  right: 108px;
+  top: -8px;
+  background: radial-gradient(circle at 35% 30%, var(--hy-wisteria), var(--hy-wisteria-lt) 70%);
+}/* ---------- Rail (horizontal strip) heads ---------------------------------- */
+body.hanayome .hy-rail-head{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 14px;
+}body.hanayome .hy-rail-hint{
+  font-size: 13px;
+  color: var(--hy-ink-faint);
+  letter-spacing: .04em;
+}body.hanayome .hy-random-band{
+  margin-bottom: 40px;
+}/* ---------- Section headings --------------------------------------------- */
+body.hanayome .hy-section-title{
+  font-family: var(--hy-font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--hy-ink);
+  letter-spacing: .06em;
+  position: relative;
+  padding-left: 16px;
+  margin: 0;
+}body.hanayome .hy-section-title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .16em;
+  bottom: .16em;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(var(--hy-wisteria), var(--hy-blossom));
+}body.hanayome .hy-section-title small{
+  font-family: var(--hy-font-round);
+  font-size: 13px;
+  color: var(--hy-ink-faint);
+  letter-spacing: .08em;
+  margin-left: 8px;
+}body.hanayome .hy-section-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}/* ---------- Discover rail (horizontal strip) ------------------------------ */
+body.hanayome .hy-random-band{
+  margin-bottom: 34px;
+}body.hanayome .hy-rail{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 150px;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 14px 4px 18px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hy-line-strong) transparent;
+}body.hanayome .hy-rail-card{
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}body.hanayome .hy-rail-card .hy-rail-cover{
+  display: block;
+  aspect-ratio: 3 / 4.2;
+  overflow: hidden;
+  border-radius: 3px 10px 10px 3px;
+  box-shadow: var(--hy-cover-shadow);
+  transition: transform .18s ease, box-shadow .18s ease;
+  background: #fff;
+}body.hanayome .hy-rail-card .hy-rail-cover:hover{
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 18px 34px -12px rgba(84, 62, 96, .5);
+}body.hanayome .hy-rail-card .hy-rail-cover .img, body.hanayome .hy-rail-card .hy-rail-cover img{
+  position: static;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  display: block;
+}body.hanayome .hy-rail-card .hy-rail-meta{
+  padding: 12px 2px 0;
+}body.hanayome .hy-rail-card .hy-rail-meta .title{
+  font-family: var(--hy-font-serif);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--hy-ink);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}body.hanayome .hy-rail-card .hy-rail-meta .author{
+  font-size: 12.5px;
+  color: var(--hy-ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 4px 0 0;
+}/* ---------- Shelf grid ---------------------------------------------------- */
+body.hanayome .hy-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(172px, 1fr));
+  gap: 34px 26px;
+  margin: 0;
+}body.hanayome .hy-card{
+  margin: 0;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+}body.hanayome .hy-card .cover{
+  aspect-ratio: 3 / 4.2;
+  position: relative;
+  margin: 0;
+  background: transparent;
+}body.hanayome .hy-card .cover span.img, body.hanayome .hy-card .cover span img{
+  position: static;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border: none;
+  box-shadow: var(--hy-cover-shadow);
+  border-radius: 3px 10px 10px 3px;   /* subtle book-spine rounding */
+  background: #fff;
+  display: block;
+  transition: transform .2s ease, box-shadow .2s ease;
+}body.hanayome .hy-card:hover .cover span img{
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px -12px rgba(84, 62, 96, .45);
+}body.hanayome .hy-card .meta{
+  margin-top: 12px;
+  padding: 0 2px;
+}body.hanayome .hy-card .meta p{
+  margin: 0;
+}body.hanayome .hy-card .meta .title{
+  font-family: var(--hy-font-serif);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--hy-ink);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}body.hanayome .hy-card .meta .author{
+  font-size: 12.5px;
+  color: var(--hy-ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}body.hanayome .hy-card .meta .series{
+  font-size: 12px;
+  color: var(--hy-ink-soft);
+}body.hanayome .hy-card .rating{
+  margin-top: 4px;
+}body.hanayome .rating .glyphicon-star.good{
+  color: var(--hy-amber);
+}body.hanayome .rating .glyphicon-star-empty{
+  color: var(--hy-line-strong);
+}/* read badge on cover */
+body.hanayome .cover .badge{
+  background: rgba(255, 255, 255, .92);
+  color: var(--hy-forest);
+  border-radius: 50%;
+  top: 8px;
+  left: 8px;
+  box-shadow: 0 2px 6px rgba(84, 62, 96, .25);
+}/* ---------- Legacy card grids (author/shelf/search/list templates) -------- */
+/* The home page uses .hy-card; other templates still emit Bootstrap
+   .book/.col-* markup — keep those looking like siblings of hy-card. */
+body.hanayome .discover .book, body.hanayome .row .book{
+  margin: 0;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+}body.hanayome .discover .book .cover, body.hanayome .row .book .cover{
+  height: auto;
+  aspect-ratio: 3 / 4.2;
+  position: relative;
+  margin-bottom: 0;
+  background: transparent;
+}body.hanayome .discover .book .cover span.img, body.hanayome .discover .book .cover span img, body.hanayome .row .book .cover span.img, body.hanayome .row .book .cover span img{
+  position: static;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border: none;
+  box-shadow: var(--hy-cover-shadow);
+  border-radius: 3px 10px 10px 3px;
+  background: #fff;
+  display: block;
+}body.hanayome .discover .book .meta, body.hanayome .row .book .meta{
+  margin-top: 12px;
+  padding: 0 2px;
+}body.hanayome .discover .book .meta .title, body.hanayome .row .book .meta .title{
+  font-family: var(--hy-font-serif);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--hy-ink);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}body.hanayome .discover .book .meta .author, body.hanayome .row .book .meta .author{
+  font-size: 12.5px;
+  color: var(--hy-ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}body.hanayome .discover .book .meta .series, body.hanayome .row .book .meta .series{
+  font-size: 12px;
+  color: var(--hy-ink-soft);
+}body.hanayome .discover .book .meta p, body.hanayome .row .book .meta p{
+  margin: 0;
+}/* ---------- Filter toolbar — segmented pills ------------------------------ */
+body.hanayome .filterheader{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 4px;
+  background: var(--hy-paper-deep);
+  border: 1px solid var(--hy-line);
+  border-radius: 999px;
+}body.hanayome .filterheader .btn{
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hy-ink-soft);
+  padding: 5px 12px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background .15s ease, color .15s ease;
+}body.hanayome .filterheader .btn .glyphicon{
+  font-size: 12px;
+}body.hanayome .filterheader .btn:hover{
+  color: var(--hy-wisteria-dk);
+  background: #fff;
+}body.hanayome .filterheader .btn.active{
+  background: var(--hy-wisteria);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 4px 12px -4px rgba(125, 95, 153, .6);
+}body.hanayome .filterheader .hy-filter-label{
+  display: inline;
+}@media (max-width: 767px){body.hanayome .filterheader .hy-filter-label{
+    display: none;
+  }
+}/* ---------- Buttons ------------------------------------------------------- */
+body.hanayome .btn{
+  border-radius: 12px;
+  transition: all .15s ease;
+}body.hanayome .btn-primary{
+  background: var(--hy-wisteria);
+  border-color: var(--hy-wisteria);
+}body.hanayome .btn-primary:hover, body.hanayome .btn-primary:focus, body.hanayome .btn-primary:active, body.hanayome .btn-primary.active, body.hanayome .open .dropdown-toggle.btn-primary{
+  background: var(--hy-wisteria-dk);
+  border-color: var(--hy-wisteria-dk);
+}body.hanayome .btn-default{
+  background: #fff;
+  border-color: var(--hy-line-strong);
+  color: var(--hy-ink);
+}body.hanayome .btn-default:hover, body.hanayome .btn-default:focus{
+  background: var(--hy-paper-deep);
+  border-color: var(--hy-wisteria);
+  color: var(--hy-wisteria-dk);
+}body.hanayome .btn-success{
+  background: var(--hy-forest);
+  border-color: var(--hy-forest);
+}body.hanayome .btn-info{
+  background: var(--hy-blossom);
+  border-color: var(--hy-blossom);
+}body.hanayome .btn-danger{
+  background: var(--hy-danger);
+  border-color: var(--hy-danger);
+}/* ---------- Detail page --------------------------------------------------- */
+body.hanayome .single .cover img{
+  border: none;
+  box-shadow: var(--hy-cover-shadow);
+  border-radius: 4px 14px 14px 4px;
+}body.hanayome .book-meta h2#title{
+  font-family: var(--hy-font-serif);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--hy-ink);
+  margin: 14px 0 4px;
+  letter-spacing: .04em;
+}body.hanayome .book-meta > .author{
+  font-size: 15px;
+  color: var(--hy-ink-soft);
+}body.hanayome .book-meta > .author a{
+  color: var(--hy-wisteria-dk);
+}body.hanayome .book-meta .tags .btn, body.hanayome .book-meta .identifiers .btn{
+  border-radius: 14px;
+  font-size: 12px;
+}body.hanayome .book-meta .tags .btn-info{
+  background: var(--hy-wisteria-lt);
+  border-color: transparent;
+  color: var(--hy-wisteria-dk);
+}body.hanayome .book-meta .tags .btn-info:hover{
+  background: var(--hy-wisteria);
+  color: #fff;
+}body.hanayome .comments h3#decription{
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  color: var(--hy-ink);
+  margin: 26px 0 10px;
+}body.hanayome .more-stuff{
+  border-top: 1px solid var(--hy-line);
+  margin-top: 28px;
+  padding-top: 24px;
+}body.hanayome .custom_columns .block-label{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}/* custom checkbox pill-ish */
+body.hanayome input[type=checkbox]{
+  accent-color: var(--hy-wisteria);
+  width: 16px;
+  height: 16px;
+}/* ---------- Tables (books table / admin) ---------------------------------- */
+body.hanayome .table{
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}body.hanayome .table thead th{
+  background: var(--hy-paper-deep);
+  border-bottom: 1px solid var(--hy-line);
+  color: var(--hy-ink-soft);
+  font-weight: 500;
+  letter-spacing: .03em;
+}body.hanayome .table tbody tr{
+  border-bottom: 1px solid var(--hy-line);
+}body.hanayome .table-hover tbody tr:hover{
+  background: var(--hy-wisteria-lt);
+}/* ---------- Modal --------------------------------------------------------- */
+body.hanayome .modal-content{
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px -12px rgba(84, 62, 96, .4);
+}body.hanayome .modal-header{
+  border-bottom: 1px solid var(--hy-line);
+}body.hanayome .modal-footer{
+  border-top: 1px solid var(--hy-line);
+}/* ---------- Pagination ---------------------------------------------------- */
+body.hanayome .pagination{
+  margin: 30px 0 10px;
+}body.hanayome .pagination .page-link{
+  border: none;
+  color: var(--hy-ink-soft);
+  background: transparent;
+  border-radius: 50% !important;
+  min-width: 34px;
+  text-align: center;
+  margin: 0 2px;
+}body.hanayome .pagination .page-item.active .page-link{
+  background: var(--hy-wisteria);
+  color: #fff;
+}body.hanayome .pagination .page-link:hover{
+  background: var(--hy-wisteria-lt);
+  color: var(--hy-wisteria-dk);
+}/* ---------- Forms --------------------------------------------------------- */
+body.hanayome .form-control{
+  border: 1px solid var(--hy-line-strong);
+  border-radius: 10px;
+  box-shadow: none;
+  font-size: 14px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}body.hanayome .form-control:focus{
+  border-color: var(--hy-wisteria);
+  box-shadow: 0 0 0 3px var(--hy-wisteria-lt);
+}body.hanayome label{
+  color: var(--hy-ink-soft);
+}/* pill input (filters) */
+body.hanayome input.pill + label{
+  border: 2px solid var(--hy-wisteria);
+  color: var(--hy-wisteria-dk);
+  border-radius: 18px;
+  padding: 4px 16px;
+}body.hanayome input.pill:checked + label{
+  background-color: var(--hy-wisteria);
+  color: #fff;
+}/* ---------- Panels / wells / cards ---------------------------------------- */
+body.hanayome .panel{
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px -6px rgba(84, 62, 96, .12);
+}body.hanayome .panel-default > .panel-heading{
+  background: var(--hy-paper-deep);
+  border-bottom: 1px solid var(--hy-line);
+  border-radius: 14px 14px 0 0;
+}body.hanayome .well{
+  background: #fff;
+  border: 1px solid var(--hy-line);
+  border-radius: 16px;
+  box-shadow: var(--hy-cover-shadow);
+}
+/* ---------- Admin --------------------------------------------------------- */
+body.hanayome .admin .config-nav, body.hanayome .admin .btn-toolbar{
+  margin-bottom: 14px;
+}body.hanayome div.log{
+  border: 1px solid var(--hy-line);
+  border-radius: 10px;
+}/* ---------- Mobile: shelf grids -------------------------------------------- */
+@media (max-width: 560px){body.hanayome .hy-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 12px;
+  }body.hanayome .hy-rail{
+    grid-auto-columns: 128px;
+    margin-right: -14px;
+  }body.hanayome .hy-pagehead{
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+  }body.hanayome .hy-pagehead-title{
+    font-size: 30px;
+  }body.hanayome .hy-pagehead-side{
+    display: none;
+  }body.hanayome .hy-app{
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}/* ---------- Reduced motion ------------------------------------------------ */
+@media (prefers-reduced-motion: reduce){body.hanayome *{
+    transition: none !important;
+  }
+}/* ---------- Focus visibility ---------------------------------------------- */
+body.hanayome a:focus-visible, body.hanayome button:focus-visible, body.hanayome input:focus-visible, body.hanayome .btn:focus-visible{
+  outline: 2px solid var(--hy-wisteria);
+  outline-offset: 2px;
+}/* ==========================================================================
+   HANAYOME v2 — full app-shell rebuild
+   Slim floating top bar, icon rail, breathing stage. Sits after all v1 rules
+   so it wins the cascade; old selectors stay for untouched templates.
+   ========================================================================== */
+
+/* ---------- Page stage ---------------------------------------------------- */
+body.hanayome{
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(155, 123, 181, .10), transparent 60%),
+    radial-gradient(700px 420px at -10% 30%, rgba(217, 139, 166, .08), transparent 55%),
+    var(--hy-paper);
+  background-attachment: fixed;
+}/* ---------- Top bar v2: floating glass pill ------------------------------- */
+body.hanayome .hy-topbar{
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  min-height: 64px;
+  background: rgba(255, 255, 255, .86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(233, 225, 232, .9);
+  box-shadow: 0 1px 0 rgba(84, 62, 96, .03), 0 8px 28px -18px rgba(84, 62, 96, .25);
+  padding: 0 max(18px, calc((100vw - 1440px) / 2));
+}body.hanayome .hy-topbar > .container-fluid{
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+}body.hanayome .hy-topbar .navbar-header{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-right: 26px;
+}body.hanayome .hy-topbar .navbar-brand{
+  height: 64px;
+  line-height: 64px;
+  padding: 0;
+  font-size: 24px;
+  letter-spacing: .05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}/* ---------- Top search: wide rounded field with leading icon --------------- */
+body.hanayome .hy-topbar .hy-search{
+  flex: 1 1 420px;
+  max-width: 560px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: var(--hy-paper-deep);
+  border: 1px solid var(--hy-line);
+  border-radius: 999px;
+  padding: 0 6px 0 14px;
+  height: 42px;
+  transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}body.hanayome .hy-topbar .hy-search:focus-within{
+  background: #fff;
+  border-color: var(--hy-wisteria);
+  box-shadow: 0 0 0 4px var(--hy-wisteria-lt);
+}body.hanayome .hy-topbar .hy-search-ic{
+  color: var(--hy-ink-faint);
+  font-size: 14px;
+  margin-right: 8px;
+  flex: 0 0 auto;
+}body.hanayome .hy-topbar .hy-search .form-control{
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  height: 40px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  font-size: 15px;
+  border-radius: 0;
+}body.hanayome .hy-topbar .hy-search .form-control:focus{
+  box-shadow: none;
+}body.hanayome .hy-topbar .hy-search-go{
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: var(--hy-wisteria);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px -3px rgba(125, 95, 153, .7);
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+}body.hanayome .hy-topbar .hy-search-go:hover{
+  background: var(--hy-wisteria-dk);
+  transform: scale(1.08);
+  box-shadow: 0 5px 14px -3px rgba(125, 95, 153, .8);
+}/* ---------- Top actions: icon buttons -------------------------------------- */
+body.hanayome .hy-topbar .navbar-collapse{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin-left: auto;
+}body.hanayome .hy-topbar .navbar-right{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}body.hanayome .hy-topbar .navbar-right > li{
+  display: flex;
+  align-items: center;
+}body.hanayome .hy-topbar .navbar-right > li > a{
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: var(--hy-ink-soft);
+  font-size: 14px;
+  line-height: 1.2;
+  transition: background .15s ease, color .15s ease;
+  white-space: nowrap;
+}body.hanayome .hy-topbar .navbar-right > li > a:hover, body.hanayome .hy-topbar .navbar-right > li > a:focus{
+  background: var(--hy-wisteria-lt);
+  color: var(--hy-wisteria-dk);
+}body.hanayome .hy-topbar .navbar-right .glyphicon{
+  font-size: 15px;
+}body.hanayome .hy-topbar .hy-act-user > a{
+  background: var(--hy-wisteria-lt);
+  color: var(--hy-wisteria-dk);
+  font-weight: 500;
+}body.hanayome .hy-topbar .hy-act-logout > a{
+  color: var(--hy-ink-faint);
+}body.hanayome .hy-topbar .hy-btn-upload{
+  border-radius: 999px;
+  background: var(--hy-blossom);
+  border-color: var(--hy-blossom);
+  color: #fff;
+  padding: 9px 16px;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}body.hanayome .hy-topbar .hy-btn-upload::before{
+  content: "";
+  width: 13px;
+  height: 13px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a1 1 0 0 1 1 1v5h5a1 1 0 1 1 0 2H9v5a1 1 0 1 1-2 0V9H2a1 1 0 1 1 0-2h5V2a1 1 0 0 1 1-1z'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a1 1 0 0 1 1 1v5h5a1 1 0 1 1 0 2H9v5a1 1 0 1 1-2 0V9H2a1 1 0 1 1 0-2h5V2a1 1 0 0 1 1-1z'/%3E%3C/svg%3E") no-repeat center / contain;
+  flex: 0 0 auto;
+}body.hanayome .hy-topbar .hy-btn-upload:hover{
+  background: #c97490;
+  border-color: #c97490;
+  color: #fff;
+}/* Upload form inside top bar (dropdown-safe) */
+body.hanayome .hy-act-upload form{
+  margin: 0;
+  padding: 0;
+}/* ---------- App shell ------------------------------------------------------ */
+body.hanayome .hy-app{
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 26px 28px 60px;
+}body.hanayome .hy-shell{
+  display: flex;
+  align-items: flex-start;
+  gap: 34px;
+}/* ---------- Rail (left nav) v2 --------------------------------------------- */
+body.hanayome .hy-rail-nav{
+  flex: 0 0 236px;
+  width: 236px;
+  padding: 0;
+  position: sticky;
+  top: 92px;
+  align-self: flex-start;
+  max-height: calc(100vh - 118px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}body.hanayome .hy-rail-nav::-webkit-scrollbar{
+  display: none;
+}body.hanayome .hy-rail-nav .navigation{
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid var(--hy-line);
+  border-radius: 20px;
+  padding: 12px 10px;
+  box-shadow: 0 10px 30px -22px rgba(84, 62, 96, .4);
+}body.hanayome .hy-rail-nav .navigation li a{
+  color: var(--hy-ink-soft);
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  transition: background .13s ease, color .13s ease, transform .13s ease;
+}body.hanayome .hy-rail-nav .navigation li a:hover{
+  background: var(--hy-blossom-lt);
+  color: var(--hy-ink);
+  transform: translateX(2px);
+}body.hanayome .hy-rail-nav .navigation li.active > a, body.hanayome .hy-rail-nav .navigation li.active > a:hover{
+  background: var(--hy-wisteria);
+  color: #fff;
+  transform: none;
+}body.hanayome .hy-rail-nav .navigation li.active > a .glyphicon{
+  color: #fff;
+}body.hanayome .hy-rail-nav .navigation li a .glyphicon{
+  color: var(--hy-ink-faint);
+  font-size: 13.5px;
+  width: 16px;
+  text-align: center;
+  flex: 0 0 auto;
+  margin: 0;
+  transition: color .13s ease;
+}body.hanayome .hy-rail-nav .navigation li.active > a .glyphicon, body.hanayome .hy-rail-nav .navigation li a:hover .glyphicon{
+  color: inherit;
+}body.hanayome .hy-rail-nav .hy-nav-txt{
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}body.hanayome .hy-rail-nav .hy-nav-group > a{
+  color: var(--hy-wisteria-dk);
+  font-weight: 500;
+}body.hanayome .hy-rail-nav .hy-nav-group > a .glyphicon{
+  color: var(--hy-wisteria-dk);
+}body.hanayome .hy-rail-nav .hy-nav-label{
+  color: var(--hy-ink-faint);
+  font-size: 11.5px;
+  letter-spacing: .2em;
+  margin: 18px 12px 6px;
+  text-transform: none;
+}body.hanayome .hy-rail-nav .hy-nav-label::before{
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: var(--hy-line-strong);
+  vertical-align: 3px;
+  margin-right: 8px;
+}body.hanayome .hy-rail-nav .hy-nav-label-shelves{
+  border-top: 1px solid var(--hy-line);
+  padding-top: 16px;
+  margin-top: 14px;
+}body.hanayome .hy-rail-nav .hy-nav-shelf a .hy-nav-badge{
+  background: var(--hy-wisteria-lt);
+  color: var(--hy-wisteria-dk);
+  font-weight: 400;
+  font-size: 11px;
+  margin-left: auto;
+  border-radius: 999px;
+  padding: 1px 8px;
+}body.hanayome .hy-rail-nav .hy-nav-shelf.active a .hy-nav-badge, body.hanayome .hy-rail-nav .hy-nav-shelf a:hover .hy-nav-badge{
+  background: rgba(255, 255, 255, .35);
+  color: #fff;
+}body.hanayome .hy-rail-nav .navigation .create-shelf{
+  margin: 14px 6px 2px;
+  text-align: center;
+}body.hanayome .hy-rail-nav .navigation .create-shelf a{
+  border: 1px dashed var(--hy-wisteria);
+  color: var(--hy-wisteria-dk);
+  background: transparent;
+  justify-content: center;
+  font-size: 13px;
+  padding: 7px 10px;
+}body.hanayome .hy-rail-nav .navigation .create-shelf a:hover{
+  background: var(--hy-wisteria-lt);
+  transform: none;
+}body.hanayome .hy-rail-nav .hy-nav-meta{
+  margin-top: 6px;
+}body.hanayome .hy-rail-nav .hy-nav-meta a{
+  color: var(--hy-ink-faint);
+  font-size: 13px;
+}/* ---------- Stage (main content) v2 ---------------------------------------- */
+body.hanayome .hy-stage{
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  max-height: none;
+  overflow: visible;
+}/* v1 fixed-height scroll columns are gone: natural document flow */
+body.hanayome > .container-fluid > .row-fluid > .col-sm-2, body.hanayome > .container-fluid > .row-fluid > .col-sm-10{
+  max-height: none;
+  overflow: visible;
+}/* ---------- Flash v2 ------------------------------------------------------- */
+body.hanayome .hy-flash{
+  position: sticky;
+  top: 74px;
+  z-index: 1020;
+  max-width: 720px;
+  margin: 12px auto 0;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px -14px rgba(84, 62, 96, .35);
+  text-align: center;
+  font-size: 14px;
+}/* ---------- v2 top bar in mobile: collapse into a card drawer -------------- */
+@media (max-width: 991px){body.hanayome .hy-topbar > .container-fluid{
+    flex-wrap: wrap;
+    min-height: 60px;
+    padding: 0 14px;
+  }body.hanayome .hy-topbar .navbar-header{
+    margin-right: 0;
+    min-height: 60px;
+  }body.hanayome .hy-topbar .navbar-brand{
+    height: 60px;
+    line-height: 60px;
+  }body.hanayome .hy-topbar .hy-search{
+    order: 3;
+    flex: 1 1 100%;
+    max-width: none;
+    margin: 4px 0 12px;
+  }body.hanayome .hy-topbar .navbar-collapse{
+    order: 2;
+    flex: 1 1 auto;
+    margin-left: auto;
+  }body.hanayome .hy-topbar .navbar-collapse.collapse{
+    display: none;
+  }body.hanayome .hy-topbar .navbar-collapse.collapse.in{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 6px 0 12px;
+    border-top: 1px solid var(--hy-line);
+    margin-top: 4px;
+  }body.hanayome .hy-topbar .navbar-collapse.collapse.in .navbar-right{
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }body.hanayome .hy-topbar .navbar-collapse.collapse.in .navbar-right > li > a{
+    justify-content: flex-start;
+    width: 100%;
+  }body.hanayome .hy-app{
+    padding: 18px 14px 48px;
+  }body.hanayome .hy-shell{
+    display: block;
+  }body.hanayome .hy-rail-nav{
+    position: static;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    margin-bottom: 18px;
+  }body.hanayome .hy-rail-nav .navigation{
+    box-shadow: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    overflow: visible;
+  }body.hanayome .hy-rail-nav .navigation ul{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }body.hanayome .hy-rail-nav .navigation li, body.hanayome .hy-rail-nav .navigation li a{
+    display: inline-flex;
+    width: auto;
+  }body.hanayome .hy-rail-nav .navigation li a{
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .8);
+    border: 1px solid var(--hy-line);
+    font-size: 13px;
+  }body.hanayome .hy-rail-nav .hy-nav-label, body.hanayome .hy-rail-nav .create-shelf, body.hanayome .hy-rail-nav .hy-nav-meta{
+    display: none;
+  }
+}
+/* intention.js moves #scnd-nav into the drawer below 480px, leaving the
+   rail aside empty — hide it there; the drawer carries the navigation. */
+@media (max-width: 480px){body.hanayome .hy-rail-nav{
+    display: none;
+  }body.hanayome .hy-stage{
+    width: 100%;
+  }
+}
+/* ==========================================================================
+   LOGIN / REGISTER — shared quiet-paper auth skin
+   Both pages share: hidden chrome, cream canvas, underline fields.
+   ========================================================================== */
+body.hanayome.login,
+body.hanayome.register {
+  background:
+    radial-gradient(700px 460px at 78% 6%, rgba(217, 139, 166, .09), transparent 60%),
+    radial-gradient(560px 420px at 4% 96%, rgba(155, 123, 181, .07), transparent 55%),
+    #faf6f0;
+}
+
+body.hanayome.login .hy-topbar,
+body.hanayome.register .hy-topbar { display: none; }
+
+body.hanayome.login .hy-app,
+body.hanayome.register .hy-app {
+  max-width: none;
+  padding: 0;
+}
+
+body.hanayome.login .hy-shell,
+body.hanayome.register .hy-shell { display: block; }
+
+body.hanayome.login .hy-stage,
+body.hanayome.register .hy-stage {
+  padding: 0;
+  width: 100%;
+  float: none;
+}
+
+/* ---------- shared form controls ------------------------------------------ */
+body.hanayome.login .hy-field,
+body.hanayome.register .hy-field { margin-bottom: 24px; }
+
+body.hanayome.login .hy-field label,
+body.hanayome.register .hy-field label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  letter-spacing: .06em;
+  color: #6b6155;
+  text-transform: none;
+}
+
+body.hanayome.login .hy-field .hy-input,
+body.hanayome.register .hy-field .hy-input {
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #d8cfc4;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 2px;
+  font-size: 17px;
+  color: #3a3226;
+  transition: border-color .2s ease;
+}
+
+body.hanayome.login .hy-field .hy-input::placeholder,
+body.hanayome.register .hy-field .hy-input::placeholder { color: #b3a89a; }
+
+body.hanayome.login .hy-field .hy-input:focus,
+body.hanayome.register .hy-field .hy-input:focus {
+  border-bottom-color: var(--hy-wisteria-dk);
+  box-shadow: none;
+  outline: none;
+}
+
+/* browser autofill: kill the tinted background */
+body.hanayome.login .hy-field .hy-input:-webkit-autofill,
+body.hanayome.login .hy-field .hy-input:-webkit-autofill:hover,
+body.hanayome.login .hy-field .hy-input:-webkit-autofill:focus,
+body.hanayome.register .hy-field .hy-input:-webkit-autofill,
+body.hanayome.register .hy-field .hy-input:-webkit-autofill:hover,
+body.hanayome.register .hy-field .hy-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #3a3226;
+  -webkit-box-shadow: 0 0 0 1000px #faf6f0 inset;
+  box-shadow: 0 0 0 1000px #faf6f0 inset;
+  border-bottom-color: #d8cfc4;
+  caret-color: #3a3226;
+  transition: background-color 99999s ease-in-out 0s;
+}
+
+body.hanayome.login .hy-passwrap,
+body.hanayome.register .hy-passwrap { position: relative; }
+
+body.hanayome.login .hy-passwrap .hy-input,
+body.hanayome.register .hy-passwrap .hy-input { padding-right: 40px; }
+
+body.hanayome.login .hy-eye,
+body.hanayome.register .hy-eye {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: none;
+  background: transparent;
+  color: #a89d90;
+  padding: 10px 10px 10px 14px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+}
+
+body.hanayome.login .hy-eye:hover,
+body.hanayome.register .hy-eye:hover { color: var(--hy-wisteria-dk); }
+
+body.hanayome.login .hy-login-row,
+body.hanayome.register .hy-login-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px 0 26px;
+}
+
+body.hanayome.login .hy-remember,
+body.hanayome.register .hy-remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 26px;
+  font-size: 14px;
+  color: #6b6155;
+  cursor: pointer;
+  user-select: none;
+}
+
+body.hanayome.login .hy-remember input,
+body.hanayome.register .hy-remember input {
+  accent-color: var(--hy-wisteria-dk);
+  width: 16px;
+  height: 16px;
+}
+
+/* submit — small, quiet */
+body.hanayome.login .hy-login-go,
+body.hanayome.register .hy-login-go {
+  display: inline-block;
+  width: auto;
+  min-width: 148px;
+  padding: 9px 30px;
+  border: 1px solid #c9beb1;
+  border-radius: 999px;
+  background: transparent;
+  color: #3a3226;
+  font-size: 13.5px;
+  letter-spacing: .2em;
+  text-indent: .2em;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+
+body.hanayome.login .hy-login-go:hover,
+body.hanayome.register .hy-login-go:hover {
+  background: #3a3226;
+  border-color: #3a3226;
+  color: #faf6f0;
+}
+
+body.hanayome.login .hy-link,
+body.hanayome.register .hy-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 13.5px;
+  color: #8a8074;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #d8cfc4;
+  cursor: pointer;
+  transition: color .15s ease, text-decoration-color .15s ease;
+}
+
+body.hanayome.login .hy-link:hover,
+body.hanayome.register .hy-link:hover {
+  color: var(--hy-wisteria-dk);
+  text-decoration-color: var(--hy-wisteria-dk);
+}
+
+body.hanayome.login .hy-login-subrow,
+body.hanayome.register .hy-login-subrow {
+  display: flex;
+  justify-content: flex-start;
+  gap: 22px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+body.hanayome.login .hy-login-error,
+body.hanayome.register .hy-login-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #f6e3e0;
+  color: #a4554f;
+  font-size: 13px;
+}
+
+body.hanayome.login .hy-oauth,
+body.hanayome.register .hy-oauth {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+body.hanayome.login .hy-oauth-btn,
+body.hanayome.register .hy-oauth-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #e0d8cd;
+  border-radius: 999px;
+  color: #4a4238;
+  font-size: 13.5px;
+  text-decoration: none;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+body.hanayome.login .hy-oauth-btn:hover,
+body.hanayome.register .hy-oauth-btn:hover {
+  border-color: #3a3226;
+  background: rgba(255, 255, 255, .6);
+  text-decoration: none;
+}
+
+/* quiet flash on auth pages */
+body.hanayome.login .hy-flash.alert,
+body.hanayome.register .hy-flash.alert {
+  background: rgba(250, 247, 244, .92);
+  border: 1px solid var(--hy-line);
+  color: #8a8074;
+  box-shadow: 0 8px 22px -14px rgba(84, 62, 96, .25);
+  font-size: 13px;
+  padding: 8px 18px;
+  backdrop-filter: blur(6px);
+}
+
+/* ==========================================================================
+   LOGIN page — giftee-style split composition
+   ========================================================================== */
+body.hanayome.login .hy-login {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(240px, 28vw) minmax(260px, 44vw) minmax(240px, 28vw);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "brand brand brand"
+    "left  art   panel"
+    "foot  foot  foot";
+  column-gap: clamp(16px, 2vw, 36px);
+  row-gap: 0;
+  align-items: start;
+  padding: 6vh clamp(44px, 6.5vw, 120px) 4.5vh;
+  margin: 0;
+  animation: hy-login-in .55s ease both;
+}
+
+@keyframes hy-login-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+body.hanayome.login .hy-login-brand {
+  grid-area: brand;
+  align-self: start;
+}
+
+body.hanayome.login .hy-login-brand a {
+  font-family: var(--hy-font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  color: #3a3226;
+  text-decoration: none;
+}
+
+body.hanayome.login .hy-login-brand a::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, var(--hy-blossom) 30%, var(--hy-wisteria) 100%);
+  vertical-align: 1px;
+}
+
+/* left: bold Japanese vertical statement */
+body.hanayome.login .hy-login-left {
+  grid-area: left;
+  align-self: center;
+  justify-self: end;
+  transform: translateY(1vh);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-end;
+  width: auto;
+}
+
+body.hanayome.login .hy-tate-group {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+body.hanayome.login .hy-login-title {
+  margin: 0;
+  font-family: var(--hy-font-serif);
+  font-weight: 700;
+  font-size: clamp(19px, 1.9vw, 26px);
+  line-height: 1.6;
+  color: #3a3226;
+  letter-spacing: .1em;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  max-height: 48vh;
+}
+
+body.hanayome.login .hy-tate-line { display: block; }
+
+body.hanayome.login .hy-login-lead {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: #6b6155;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: .18em;
+  max-height: 26vh;
+  opacity: .8;
+}
+
+body.hanayome.login .hy-login-lead .hy-tate-line { margin-top: 1.4em; }
+
+/* middle: lily artwork */
+body.hanayome.login .hy-login-art {
+  grid-area: art;
+  position: relative;
+  width: 100%;
+  height: min(52vh, 430px);
+  align-self: center;
+  transform: translateX(-8px);
+  justify-self: center;
+}
+
+body.hanayome.login .hy-lily-img {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  transform: translate(-50%, -50%) translateX(8px) translateY(6px);
+  width: min(100%, 460px);
+  height: auto;
+  filter: drop-shadow(0 18px 26px rgba(90, 70, 80, .16));
+  animation: hy-lily-img-in .8s ease both;
+}
+
+@keyframes hy-lily-img-in {
+  from { opacity: 0; transform: translate(-50%, -50%) translateX(8px) translateY(6px) scale(.95); }
+  to   { opacity: 1; transform: translate(-50%, -50%) translateX(8px) translateY(6px) scale(1); }
+}
+
+/* faint oversized arcs */
+body.hanayome.login .hy-art-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.hanayome.login .hy-art-blob-a {
+  width: 46vw;
+  height: 46vw;
+  max-width: 560px;
+  max-height: 560px;
+  left: -18vw;
+  top: -24vh;
+  border: 1px solid rgba(58, 50, 38, .06);
+  background: radial-gradient(circle at 40% 35%, rgba(217, 139, 166, .05), transparent 62%);
+}
+
+body.hanayome.login .hy-art-blob-b {
+  width: 30vw;
+  height: 30vw;
+  max-width: 400px;
+  max-height: 400px;
+  left: 6vw;
+  top: 4vh;
+  border: 1px solid rgba(58, 50, 38, .05);
+}
+
+/* right: login panel */
+body.hanayome.login .hy-login-panel {
+  grid-area: panel;
+  align-self: end;
+  justify-self: end;
+  width: 100%;
+  max-width: 400px;
+  padding-bottom: 0;
+  margin-bottom: 4vh;
+}
+
+body.hanayome.login .hy-login-form { text-align: left; }
+
+/* footer */
+body.hanayome.login .hy-login-foot {
+  grid-area: foot;
+  align-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5vh;
+  padding-top: 18px;
+  border-top: 1px solid #e7ded2;
+  font-size: 12.5px;
+  letter-spacing: .08em;
+  color: #a89d90;
+}
+
+body.hanayome.login .hy-login-foot-dot { color: #d8cfc4; }
+
+/* ==========================================================================
+   REGISTER page — ultra minimal
+   ========================================================================== */
+body.hanayome.register .hy-reg-min {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  padding: 4vh 24px 6vh;
+  animation: hy-reg-in .5s ease both;
+}
+
+@keyframes hy-reg-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+body.hanayome.register .hy-reg-brand {
+  font-family: var(--hy-font-serif);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  color: #3a3226;
+  text-decoration: none;
+}
+
+body.hanayome.register .hy-reg-brand::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, var(--hy-blossom) 30%, var(--hy-wisteria) 100%);
+  vertical-align: 1px;
+}
+
+body.hanayome.register .hy-reg-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+body.hanayome.register .hy-reg-card .hy-login-form { text-align: left; }
+
+body.hanayome.register .hy-reg-card .hy-login-go { display: block; width: 100%; }
+
+body.hanayome.register .hy-reg-title {
+  margin: 0 0 30px;
+  font-family: var(--hy-font-serif);
+  font-weight: 500;
+  font-size: 30px;
+  color: #3a3226;
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+body.hanayome.register .hy-reg-alt {
+  margin: 24px 0 0;
+  text-align: center;
+}
+
+/* flash overlays on register so card centers true */
+body.hanayome.register .hy-flash {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  margin: 0;
+  max-width: min(92vw, 560px);
+}
+
+/* ==========================================================================
+   Dust transition
+   ========================================================================== */
+#hy-dust {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+#hy-dust .hy-mote {
+  position: fixed;
+  border-radius: 50%;
+  opacity: .9;
+  transition: transform .8s ease-out, opacity .8s ease-out;
+  will-change: transform, opacity;
+}
+
+/* auth pages keep chrome hidden & stage full-bleed (mobile) */
+@media (max-width: 900px) {
+  body.hanayome.login .hy-login {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "brand"
+      "panel"
+      "art"
+      "foot";
+    row-gap: 26px;
+    align-items: start;
+    padding: 26px 24px 30px;
+  }
+
+  body.hanayome.login .hy-login-brand a { font-size: 19px; }
+  body.hanayome.login .hy-login-left { display: none; }
+
+  body.hanayome.login .hy-login-panel {
+    justify-self: stretch;
+    max-width: none;
+    padding-bottom: 0;
+  }
+
+  body.hanayome.login .hy-login-art {
+    height: 240px;
+    transform: none;
+  }
+
+  body.hanayome.login .hy-lily-img {
+    width: min(62vw, 260px);
+  }
+
+  body.hanayome.login .hy-art-blob-a {
+    width: 90vw;
+    height: 90vw;
+    left: -30vw;
+    top: -30vh;
+  }
+}
+
+/* register entry points that got displaced by edits are restored below */

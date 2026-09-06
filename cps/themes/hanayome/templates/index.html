@@ -1,0 +1,160 @@
+{% import 'image.html' as image %}
+{% extends theme("layout.html") %}
+{% block body %}
+
+{# ------------------------------------------------------------------ #}
+{#  Hanayome home — editorial page head, random rail, shelf grid.      #}
+{# ------------------------------------------------------------------ #}
+{% if page == 'newest' and title == _('Books') %}
+<header class="hy-pagehead">
+  <div class="hy-pagehead-txt">
+    <p class="hy-pagehead-kicker">Library</p>
+    <h1 class="hy-pagehead-title">{{ instance }}</h1>
+  </div>
+  <div class="hy-pagehead-side" aria-hidden="true">
+    <span class="hy-ph-blob hy-ph-blob-a"></span>
+    <span class="hy-ph-blob hy-ph-blob-b"></span>
+  </div>
+</header>
+{% endif %}
+
+{% if current_user.show_detail_random() and page != "discover" and random %}
+<div class="discover random-books hy-random-band">
+  <div class="hy-rail-head">
+    <h2 class="hy-section-title">{{_('Random picks')}}</h2>
+    <span class="hy-rail-hint">{{_('for you')}}</span>
+  </div>
+  <div class="hy-rail">
+   {% for entry in random %}
+    <div class="hy-rail-card book session" id="books_rand">
+      <a href="{{ url_for('web.show_book', book_id=entry.Books.id) }}" {% if simple==false %}data-toggle="modal" data-target="#bookDetailsModal" data-remote="false"{% endif %} class="hy-rail-cover">
+        <span class="img" title="{{ entry.Books.title }}">
+          {{ image.book_cover(entry.Books) }}
+          {% if entry[2] == True %}<span class="badge read glyphicon glyphicon-ok"></span>{% endif %}
+        </span>
+      </a>
+      <div class="meta hy-rail-meta">
+        <a href="{{ url_for('web.show_book', book_id=entry.Books.id) }}" {% if simple==false %}data-toggle="modal" data-target="#bookDetailsModal" data-remote="false"{% endif %}>
+          <p title="{{entry.Books.title}}" class="title">{{entry.Books.title|shortentitle}}</p>
+        </a>
+        <p class="author">
+          {% for author in entry.Books.authors %}
+            {% if loop.index > g.config_authors_max and g.config_authors_max != 0 %}
+              {% if not loop.first %}
+                <span class="author-hidden-divider">&amp;</span>
+              {% endif %}
+              <a class="author-name author-hidden" href="{{url_for('web.books_list', data='author', sort_param='stored', book_id=author.id) }}">{{author.name.replace('|',',')|shortentitle(30)}}</a>
+              {% if loop.last %}
+                <a href="#" class="author-expand" data-authors-max="{{g.config_authors_max}}" data-collapse-caption="({{_('reduce')}})">(...)</a>
+              {% endif %}
+            {% else %}
+              {% if not loop.first %}
+                <span>&amp;</span>
+              {% endif %}
+              <a class="author-name" href="{{url_for('web.books_list',  data='author', sort_param='stored', book_id=author.id) }}">{{author.name.replace('|',',')|shortentitle(30)}}</a>
+            {% endif %}
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="discover load-more hy-shelf" id="hy-shelf">
+  {% if page != 'discover' %}
+   <div class="hy-section-head">
+    <h2 class="hy-section-title">{{title}}</h2>
+    {% if order %}
+    <div class="filterheader hy-filter" aria-label="{{_('Sort')}}">
+      {% if page == 'hot' %}
+        <a data-toggle="tooltip" title="{{_('Sort ascending according to download count')}}" id="hot_asc" class="btn btn-primary{% if order == "hotasc" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='hotasc')}}"><span class="glyphicon glyphicon-sort-by-order"></span><span class="hy-filter-label">{{_('Hot first')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort descending according to download count')}}" id="hot_desc" class="btn btn-primary{% if order == "hotdesc" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='hotdesc')}}"><span class="glyphicon glyphicon-sort-by-order-alt"></span><span class="hy-filter-label">{{_('Hot last')}}</span></a>
+      {% else %}
+        <a data-toggle="tooltip" title="{{_('Sort according to book date, newest first')}}" id="new" class="btn btn-primary{% if order == "new" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='new')}}"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-sort-by-order"></span><span class="hy-filter-label">{{_('Newest')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort according to book date, oldest first')}}" id="old" class="btn btn-primary{% if order == "old" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='old')}}"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-sort-by-order-alt"></span><span class="hy-filter-label">{{_('Oldest')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort title in alphabetical order')}}" id="asc" class="btn btn-primary{% if order == "abc" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='abc')}}"><span class="glyphicon glyphicon-font"></span><span class="glyphicon glyphicon-sort-by-alphabet"></span><span class="hy-filter-label">{{_('A–Z')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort title in reverse alphabetical order')}}" id="desc" class="btn btn-primary{% if order == "zyx" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='zyx')}}"><span class="glyphicon glyphicon-font"></span><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span><span class="hy-filter-label">{{_('Z–A')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort authors in alphabetical order')}}" id="auth_az" class="btn btn-primary{% if order == "authaz" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='authaz')}}"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-sort-by-alphabet"></span><span class="hy-filter-label">{{_('Author A–Z')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort authors in reverse alphabetical order')}}" id="auth_za" class="btn btn-primary{% if order == "authza" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='authza')}}"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span><span class="hy-filter-label">{{_('Author Z–A')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort according to publishing date, newest first')}}" id="pub_new" class="btn btn-primary{% if order == "pubnew" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='pubnew')}}"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-sort-by-order"></span><span class="hy-filter-label">{{_('Published')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort according to publishing date, oldest first')}}" id="pub_old" class="btn btn-primary{% if order == "pubold" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='pubold')}}"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-sort-by-order-alt"></span><span class="hy-filter-label">{{_('Published old')}}</span></a>
+        {% if page == 'series' %}
+        <a data-toggle="tooltip" title="{{_('Sort ascending according to series index')}}" id="series_asc" class="btn btn-primary{% if order == "seriesasc" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='seriesasc')}}"><span class="glyphicon glyphicon-sort-by-order"></span><span class="hy-filter-label">{{_('Volume')}}</span></a>
+        <a data-toggle="tooltip" title="{{_('Sort descending according to series index')}}" id="series_desc" class="btn btn-primary{% if order == "seriesdesc" %} active{% endif%}" href="{{url_for('web.books_list', data=page, book_id=id, sort_param='seriesdesc')}}"><span class="glyphicon glyphicon-sort-by-order-alt"></span><span class="hy-filter-label">{{_('Volume desc')}}</span></a>
+        {% endif %}
+      {% endif %}
+    </div>
+    {% endif %}
+   </div>
+  {% endif %}
+
+  <div class="hy-grid">
+    {% if entries[0] %}
+    {% for entry in entries %}
+    <article class="hy-card book session" id="books">
+      <div class="hy-card-cover cover">
+          <a href="{{ url_for('web.show_book', book_id=entry.Books.id) }}" {% if simple==false %}data-toggle="modal" data-target="#bookDetailsModal" data-remote="false"{% endif %}>
+            <span class="img" title="{{ entry.Books.title }}">
+              {{ image.book_cover(entry.Books) }}
+              {% if entry[2] == True %}<span class="badge read glyphicon glyphicon-ok"></span>{% endif %}
+            </span>
+          </a>
+      </div>
+      <div class="meta hy-card-meta">
+        <a href="{{ url_for('web.show_book', book_id=entry.Books.id) }}" {% if simple==false %}data-toggle="modal" data-target="#bookDetailsModal" data-remote="false"{% endif %}>
+          <p title="{{ entry.Books.title }}" class="title">{{entry.Books.title|shortentitle}}</p>
+        </a>
+        <p class="author">
+          {% for author in entry.Books.authors %}
+            {% if loop.index > g.config_authors_max and g.config_authors_max != 0 %}
+              {% if not loop.first %}
+                <span class="author-hidden-divider">&amp;</span>
+              {% endif %}
+              <a class="author-name author-hidden" href="{{url_for('web.books_list', data='author', book_id=author.id, sort_param='stored') }}">{{author.name.replace('|',',')|shortentitle(30)}}</a>
+              {% if loop.last %}
+                <a href="#" class="author-expand" data-authors-max="{{g.config_authors_max}}" data-collapse-caption="({{_('reduce')}})">(...)</a>
+              {% endif %}
+            {% else %}
+              {% if not loop.first %}
+                <span>&amp;</span>
+              {% endif %}
+              <a class="author-name" href="{{url_for('web.books_list', data='author', book_id=author.id, sort_param='stored') }}">{{author.name.replace('|',',')|shortentitle(30)}}</a>
+            {% endif %}
+          {% endfor %}
+          {% if entry.Books.data|music %}
+            <span class="glyphicon glyphicon-music"></span>
+          {% endif %}
+        </p>
+        {% if entry.Books.series.__len__() > 0 %}
+        <p class="series hy-card-series">
+        {% if page != "series" %}
+          <a href="{{url_for('web.books_list', data='series', sort_param='stored', book_id=entry.Books.series[0].id )}}">
+            {{entry.Books.series[0].name}}
+          </a>
+        {% else %}
+            <span>{{entry.Books.series[0].name}}</span>
+        {% endif %}
+          ({{entry.Books.series_index|formatfloat(2)}})
+        </p>
+        {% endif %}
+        {% if entry.Books.ratings.__len__() > 0 %}
+        <div class="rating hy-rating">
+          {% for number in range((entry.Books.ratings[0].rating/2)|int(2)) %}
+            <span class="glyphicon glyphicon-star good"></span>
+            {% if loop.last and loop.index < 5 %}
+              {% for numer in range(5 - loop.index) %}
+                <span class="glyphicon glyphicon-star-empty"></span>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

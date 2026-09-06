@@ -60,6 +60,20 @@ THEMES = (
         "show_home_shortcuts": False,
         "profile_dropdown": False,
         "show_upload_loader": False
+    },
+    {
+        "id": 3,
+        "identifier": "hanayome",
+        "label": "Hanayome — 花嫁百合文库",
+        "configurable": True,
+        "css_files": (
+            "css/hanayome.css"
+        ),
+        "js_files": (),
+        "body_class": "hanayome",
+        "show_home_shortcuts": False,
+        "profile_dropdown": False,
+        "show_upload_loader": False
     }
 )
 

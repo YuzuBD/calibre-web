@@ -1,0 +1,118 @@
+{% extends theme("layout.html") %}
+{% block body %}
+<div class="hy-login">
+  {# ---- masthead: brand top-left --------------------------------- #}
+  <header class="hy-login-brand">
+    <a href="{{url_for('web.index')}}">{{instance}}</a>
+  </header>
+
+  {# ---- left column: bold Japanese statement, r→l -------------------- #}
+  <section class="hy-login-left">
+    <div class="hy-tate-group">
+      <h1 class="hy-login-title" lang="ja">
+        <span class="hy-tate-line">本棚に眠る物語を、</span>
+        <span class="hy-tate-line">また手に取る時間を。</span>
+      </h1>
+      <p class="hy-login-lead" lang="ja">
+        <span class="hy-tate-line">静かな頁の奥の約束は</span>
+        <span class="hy-tate-line">読む者のみが知る。</span>
+      </p>
+    </div>
+  </section>
+
+  {# ---- middle: lily artwork ----------------------------------------- #}
+  <div class="hy-login-art" aria-hidden="true">
+    <img class="hy-lily-img" src="{{ url_for('static', filename='img/liily.png') }}"
+         alt="{{_('Lily illustration')}}" role="img">
+    <span class="hy-art-blob hy-art-blob-a"></span>
+    <span class="hy-art-blob hy-art-blob-b"></span>
+  </div>
+
+  {# ---- right column: login panel ---------------------------------- #}
+  <section class="hy-login-panel" aria-label="{{_('Login')}}">
+    {% if error %}
+    <div class="hy-login-error">
+      <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+      <span>{{error}}</span>
+    </div>
+    {% endif %}
+
+    <form method="POST" role="form" class="hy-login-form">
+      <input type="hidden" name="next" value="{{next_url}}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="form-group hy-field">
+        <label for="username">{{_('Username')}}</label>
+        <input type="text" class="form-control hy-input" id="username" name="username"
+               autocapitalize="off" autocomplete="username"
+               placeholder="{{_('Username')}}" value="{{ username }}">
+      </div>
+
+      <div class="form-group hy-field">
+        <label for="password">{{_('Password')}}</label>
+        <div class="hy-passwrap">
+          <input type="password" class="form-control hy-input" id="password" name="password"
+                 autocomplete="current-password"
+                 placeholder="{{_('Password')}}" value="{{ password }}">
+          <button type="button" class="hy-eye toggle-password" data-target="#password"
+                  data-password-show="{{_('Show password')}}" data-password-hide="{{_('Hide password')}}"
+                  aria-label="{{_('Show password')}}" title="{{_('Show password')}}">
+            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hy-login-row">
+        <label class="hy-remember">
+          <input type="checkbox" name="remember_me" checked>
+          <span>{{_('Remember Me')}}</span>
+        </label>
+        {% if config.config_login_type == 0 and mail %}
+        <button type="submit" name="forgot" value="forgot" class="hy-link">{{_('Forgot Password?')}}</button>
+        {% endif %}
+      </div>
+
+      <button type="submit" name="submit" class="hy-login-go">{{_('Login')}}</button>
+
+      <div class="hy-login-subrow">
+        {% if g.allow_registration %}
+        <a href="{{url_for('web.register')}}" class="hy-link hy-register-link" id="to-register">{{_('Create an account')}}</a>
+        {% endif %}
+        {% if config.config_remote_login %}
+        <a href="{{url_for('remotelogin.remote_login')}}" id="remote_login" class="hy-link">{{_('Log in with Magic Link')}}</a>
+        {% endif %}
+      </div>
+
+      {% if config.config_login_type == 2 %}
+      <div class="hy-oauth">
+        {% if 1 in oauth_check %}
+        <a href="{{url_for('oauth.github_login')}}" class="hy-oauth-btn github" aria-label="GitHub">
+          <svg height="18" viewBox="0 0 16 16" width="18" aria-hidden="true">
+            <path fill-rule="evenodd" fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          <span>GitHub</span>
+        </a>
+        {% endif %}
+        {% if 2 in oauth_check %}
+        <a href="{{url_for('oauth.google_login')}}" class="hy-oauth-btn google" aria-label="Google">
+          <svg width="18" height="18" viewBox="0 3 48 48" aria-hidden="true">
+            <path fill="#FFC107" d="M 43.609375 20.082031 L 42 20.082031 L 42 20 L 24 20 L 24 28 L 35.304688 28 C 33.652344 32.65625 29.222656 36 24 36 C 17.371094 36 12 30.628906 12 24 C 12 17.371094 17.371094 12 24 12 C 27.058594 12 29.84375 13.152344 31.960938 15.039063 L 37.617188 9.382813 C 34.046875 6.054688 29.269531 4 24 4 C 12.953125 4 4 12.953125 4 24 C 4 35.046875 12.953125 44 24 44 C 35.046875 44 44 35.046875 44 24 C 44 22.660156 43.863281 21.351563 43.609375 20.082031 Z"></path>
+            <path fill="#FF3D00" d="M 6.304688 14.691406 L 12.878906 19.511719 C 14.65625 15.109375 18.960938 12 24 12 C 27.058594 12 29.84375 13.152344 31.960938 15.039063 L 37.617188 9.382813 C 34.046875 6.054688 29.269531 4 24 4 C 12.953125 4 4 12.953125 4 24 C 4 35.046875 12.953125 44 24 44 C 35.046875 44 44 35.046875 44 24 C 44 22.660156 43.863281 21.351563 43.609375 20.082031 Z"></path>
+            <path fill="#4CAF50" d="M 24 44 C 29.166016 44 33.410156 42.128906 36.589844 38.914063 L 30.019531 33.589844 C 28.140625 35.089844 26.210938 36 24 36 C 18.972656 36 14.710938 32.898438 13.082031 28.378906 L 6.3203125 33.28125 C 9.554688 39.789063 16.214844 44 24 44 Z"></path>
+            <path fill="#1976D2" d="M 43.609375 20.082031 L 42 20.082031 L 42 20 L 24 20 L 24 28 L 35.304688 28 C 34.546875 30.164063 33.101563 32.019531 31.222656 33.398438 L 31.246094 33.386719 L 30.019531 33.589844 L 36.589844 38.914063 C 36.140625 39.335938 43.597656 34 43.597656 24 C 43.597656 22.660156 43.863281 21.351563 43.609375 20.082031 Z"></path>
+          </svg>
+          <span>Google</span>
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </form>
+  </section>
+
+  <footer class="hy-login-foot">
+    <span>{{instance}}</span>
+    <span class="hy-login-foot-dot">·</span>
+    <span>{{_('Read. Shelve. Revisit.')}}</span>
+  </footer>
+</div>
+{% endblock %}

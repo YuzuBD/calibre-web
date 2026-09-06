@@ -1,0 +1,41 @@
+{% extends theme("layout.html") %}
+{% block body %}
+<div class="hy-reg-min" id="hy-reg-root">
+  <a class="hy-reg-brand" href="{{url_for('web.index')}}">{{instance}}</a>
+
+  <div class="hy-reg-card">
+    <h2 class="hy-reg-title">{{_('Join the library')}}</h2>
+
+    {% if error %}
+    <div class="hy-login-error">
+      <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+      <span>{{error}}</span>
+    </div>
+    {% endif %}
+
+    <form method="POST" role="form" class="hy-login-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      {% if not config.config_register_email %}
+      <div class="form-group hy-field">
+        <label for="name">{{_('Username')}}</label>
+        <input type="text" class="form-control hy-input" id="name" name="name"
+               placeholder="{{_('Choose a username')}}" value="{{ username }}" required>
+      </div>
+      {% endif %}
+
+      <div class="form-group hy-field">
+        <label for="email">{{_('Email')}}</label>
+        <input type="email" class="form-control hy-input" id="email" name="email"
+               placeholder="{{_('Your Email')}}" value="{{ email }}" required>
+      </div>
+
+      <button type="submit" id="submit" class="hy-login-go">{{_('Register')}}</button>
+    </form>
+
+    <p class="hy-reg-alt">
+      <a href="{{url_for('web.login')}}" id="to-login" class="hy-link">{{_('Already a member? Login')}}</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
