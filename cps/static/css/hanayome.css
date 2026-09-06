@@ -1272,6 +1272,26 @@ body.hanayome.login .hy-login-lead {
 
 body.hanayome.login .hy-login-lead .hy-tate-line { margin-top: 1.4em; }
 
+/* glyph-by-glyph tagline reveal (activated by JS; no-JS keeps text visible) */
+body.hanayome.login .hy-tate-group .hy-glyph {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity .38s ease, transform .38s ease;
+  will-change: opacity, transform;
+}
+body.hanayome.login .hy-tate-group.hy-reveal .hy-glyph {
+  opacity: 0;
+  transform: translateY(-7px);
+}
+body.hanayome.login .hy-tate-group.hy-reveal .hy-glyph.hy-glyph-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* punctuation rides in faster so a line reads as one continuous phrase */
+body.hanayome.login .hy-tate-group.hy-reveal .hy-glyph.hy-glyph-on.hy-glyph-punct {
+  transition-duration: .22s;
+}
+
 /* middle: lily artwork */
 body.hanayome.login .hy-login-art {
   grid-area: art;

@@ -70,6 +70,51 @@
         });
     }
 
+    /* ---------- tagline: reveal glyph by glyph in reading order ---------- */
+    var CHAR_MS = 95;          // per glyph
+    var LINE_MS = 260;         // extra pause before each following line
+
+    function revealTagline() {
+        var $group = $("body.login .hy-tate-group");
+        if (!$group.length || $group.data("hy-revealed")) { return; }
+        $group.data("hy-revealed", true);
+
+        // split each line into glyph spans (keeps whitespace out)
+        $group.find(".hy-tate-line").each(function () {
+            var $line = $(this);
+            var text = $line.text();
+            $line.empty();
+            var frag = document.createDocumentFragment();
+            text.replace(/\S/g, function (ch) {
+                var $g = $("<span class='hy-glyph'>" + ch + "</span>");
+                // mark punctuation so CSS can give it a shorter beat
+                if (/[、。，,.!?！？…—]/.test(ch)) { $g.addClass("hy-glyph-punct"); }
+                frag.appendChild($g[0]);
+                return ch;
+            });
+            $line[0].appendChild(frag);
+        });
+
+        // glyphs stay hidden only while the revealer marked the group
+        $group.addClass("hy-reveal");
+
+        // walk lines in DOM order (= reading order: right column first)
+        var t = 350; // let the page settle in first
+        $group.find(".hy-tate-line").each(function () {
+            var $glyphs = $(this).children(".hy-glyph");
+            $glyphs.each(function (idx) {
+                var $g = $(this);
+                var delay = t + idx * CHAR_MS;
+                (function ($glyph, d) {
+                    setTimeout(function () {
+                        $glyph.addClass("hy-glyph-on");
+                    }, d);
+                })($g, delay);
+            });
+            t += LINE_MS + $glyphs.length * CHAR_MS;
+        });
+    }
+
     /* ---------- toasts: float up, fade out, leave no trace --------------- */
     var TOAST_MS = 4200;
 
@@ -139,6 +184,9 @@
 
         // 3) auth-page dust transition (login <-> register only)
         if (!isAuthPage()) { return; }
+
+        // tagline glyph-by-glyph reveal, right column first (reading order)
+        revealTagline();
 
         $(document).on("click", "#to-register, #to-login", function (e) {
             e.preventDefault();
