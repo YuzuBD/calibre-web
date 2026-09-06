@@ -1694,3 +1694,71 @@ body.hanayome .book-meta .btn-toolbar #Download:hover {
   transform: none;
   box-shadow: none;
 }
+
+/* ==========================================================================
+   Book detail — secondary actions (shelf / edit / cancel)
+   ========================================================================== */
+body.hanayome .book-meta .more-stuff .btn-toolbar,
+body.hanayome .book-meta .more-stuff > .col-sm-12 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+body.hanayome .book-meta .more-stuff .btn {
+  border-radius: 999px !important;
+  padding: 8px 18px;
+  font-size: 13.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  box-shadow: none !important;
+}
+
+body.hanayome .book-meta .more-stuff a.btn,
+body.hanayome .book-meta .more-stuff button.btn {
+  color: #fff !important;
+}
+
+/* add-to-shelf / edit-metadata: solid wisteria */
+body.hanayome .book-meta .more-stuff #add-to-shelf,
+body.hanayome .book-meta .more-stuff #edit_book {
+  background: var(--hy-wisteria);
+  border-color: var(--hy-wisteria);
+}
+
+body.hanayome .book-meta .more-stuff #add-to-shelf:hover,
+body.hanayome .book-meta .more-stuff #edit_book:hover {
+  background: var(--hy-wisteria-dk);
+  border-color: var(--hy-wisteria-dk);
+  color: #fff !important;
+}
+
+/* remove-from-shelf chips: soft outline */
+body.hanayome .book-meta .more-stuff #remove-from-shelves .btn {
+  background: transparent;
+  border: 1px solid var(--hy-line-strong);
+  color: var(--hy-ink-soft) !important;
+}
+
+body.hanayome .book-meta .more-stuff #remove-from-shelves .btn:hover {
+  border-color: var(--hy-wisteria);
+  color: var(--hy-wisteria-dk) !important;
+  background: var(--hy-wisteria-lt);
+}
+
+/* cancel: quiet outline */
+body.hanayome .book-meta .more-stuff #back {
+  background: transparent;
+  border: 1px solid var(--hy-line-strong);
+  color: var(--hy-ink-soft);
+  border-radius: 999px;
+}
+
+body.hanayome .book-meta .more-stuff #back:hover {
+  border-color: var(--hy-ink-soft);
+  color: var(--hy-ink);
+}
