@@ -1493,3 +1493,72 @@ body.hanayome.register .hy-flash {
 }
 
 /* register entry points that got displaced by edits are restored below */
+
+/* ==========================================================================
+   Toasts — floating notifications that auto-dismiss
+   ========================================================================== */
+#hy-toastzone {
+  position: fixed;
+  top: 76px;
+  right: 20px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(420px, calc(100vw - 40px));
+  pointer-events: none;
+}
+
+body.hanayome .hy-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #3a3226;
+  background: rgba(255, 255, 255, .94);
+  border: 1px solid var(--hy-line);
+  box-shadow: 0 14px 34px -14px rgba(84, 62, 96, .4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(-8px) scale(.97);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+body.hanayome .hy-toast.hy-toast-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+body.hanayome .hy-toast.hy-toast-out {
+  opacity: 0;
+  transform: translateY(-6px) scale(.98);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+body.hanayome .hy-toast-ic {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  font-size: 15px;
+}
+
+body.hanayome .hy-toast-error { border-left: 3px solid #c06a6a; }
+body.hanayome .hy-toast-error .hy-toast-ic { color: #c06a6a; }
+body.hanayome .hy-toast-success { border-left: 3px solid #5f8f74; }
+body.hanayome .hy-toast-success .hy-toast-ic { color: #5f8f74; }
+body.hanayome .hy-toast-warning { border-left: 3px solid #b98a3e; }
+body.hanayome .hy-toast-warning .hy-toast-ic { color: #b98a3e; }
+body.hanayome .hy-toast-info { border-left: 3px solid #9b7bb5; }
+body.hanayome .hy-toast-info .hy-toast-ic { color: #9b7bb5; }
+
+body.hanayome .hy-toast-txt { flex: 1 1 auto; min-width: 0; }
+
+/* toast on auth pages should not fight the centering */
+body.hanayome.login #hy-toastzone,
+body.hanayome.register #hy-toastzone {
+  top: 18px;
+}

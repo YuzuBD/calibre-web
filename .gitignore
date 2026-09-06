@@ -35,3 +35,11 @@ gdrive_credentials
 client_secrets.json
 gmail.json
 /.key
+
+# local library data & runtime (never commit)
+/library/
+libmagic.dll
+magic.mgc
+*_local_bak/
+*_local.db.bak
+library/metadata.db

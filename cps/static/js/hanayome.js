@@ -70,8 +70,74 @@
         });
     }
 
+    /* ---------- toasts: float up, fade out, leave no trace --------------- */
+    var TOAST_MS = 4200;
+
+    function primeToast($t) {
+        if ($t.data("hy-toast")) { return; }
+        $t.data("hy-toast", true);
+        // small stagger so stacked toasts read as a pile
+        var delay = 150 * $t.index();
+        setTimeout(function () {
+            $t.addClass("hy-toast-in");
+        }, delay + 30);
+        setTimeout(function () {
+            $t.addClass("hy-toast-out");
+            setTimeout(function () { $t.remove(); }, 700);
+        }, TOAST_MS + delay);
+    }
+
+    function convertLegacyAlert($alert) {
+        // main.js injects '.navbar'-after row-fluid > #flash_X.alert.alert-X
+        var type = "info";
+        if ($alert.hasClass("alert-danger")) { type = "error"; }
+        else if ($alert.hasClass("alert-success")) { type = "success"; }
+        else if ($alert.hasClass("alert-warning")) { type = "warning"; }
+        var $toast = $("<div class='hy-toast hy-toast-" + type + "' role='status'>" +
+            "<span class='hy-toast-txt'></span></div>");
+        $toast.find(".hy-toast-txt").text($alert.text().trim());
+        var zone = $("#hy-toastzone");
+        if (!zone.length) {
+            zone = $("<div id='hy-toastzone'></div>").appendTo("body");
+        }
+        zone.append($toast);
+        $alert.closest(".row-fluid").remove();
+        $alert.remove();
+        primeToast($toast);
+    }
+
     /* ---------- wiring --------------------------------------------------- */
     $(function () {
+        // 1) toasts on every page
+        $("#hy-toastzone .hy-toast").each(function () { primeToast($(this)); });
+
+        // 2) legacy alerts injected by main.js after navigation
+        var mo = window.MutationObserver
+            ? new MutationObserver(function (muts) {
+                muts.forEach(function (m) {
+                    m.addedNodes.forEach(function (n) {
+                        if (n.nodeType !== 1) { return; }
+                        var $n = $(n);
+                        if ($n.hasClass("alert") && $n.find(".hy-toast-txt").length === 0) {
+                            convertLegacyAlert($n);
+                        }
+                        $n.find(".alert").each(function () {
+                            var $a = $(this);
+                            if (!$a.closest(".hy-toast").length) { convertLegacyAlert($a); }
+                        });
+                    });
+                });
+            })
+            : null;
+        if (mo) {
+            mo.observe(document.body, { childList: true, subtree: true });
+        }
+        // catch any alert already present on load
+        $("body > .row-fluid.text-center .alert, #message.alert").each(function () {
+            convertLegacyAlert($(this));
+        });
+
+        // 3) auth-page dust transition (login <-> register only)
         if (!isAuthPage()) { return; }
 
         $(document).on("click", "#to-register, #to-login", function (e) {

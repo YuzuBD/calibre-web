@@ -90,28 +90,34 @@
       </div>
     </div>
 
+    <div id="hy-toastzone" aria-live="polite" aria-atomic="false">
     {% for message in get_flashed_messages(with_categories=True) %}
       {%if message[0] == "error" %}
-      <div class="row-fluid text-center">
-        <div id="flash_danger" class="alert alert-danger hy-flash">{{ message[1] }}</div>
+      <div class="hy-toast hy-toast-error" role="alert">
+        <span class="hy-toast-ic glyphicon glyphicon-alert" aria-hidden="true"></span>
+        <span class="hy-toast-txt">{{ message[1] }}</span>
       </div>
       {%endif%}
       {%if message[0] == "info" %}
-      <div class="row-fluid text-center">
-        <div id="flash_info" class="alert alert-info hy-flash">{{ message[1] }}</div>
+      <div class="hy-toast hy-toast-info" role="status">
+        <span class="hy-toast-ic glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        <span class="hy-toast-txt">{{ message[1] }}</span>
       </div>
       {%endif%}
       {%if message[0] == "warning" %}
-      <div class="row-fluid text-center">
-        <div id="flash_warning" class="alert alert-warning hy-flash">{{ message[1] }}</div>
+      <div class="hy-toast hy-toast-warning" role="alert">
+        <span class="hy-toast-ic glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="hy-toast-txt">{{ message[1] }}</span>
       </div>
       {%endif%}
       {%if message[0] == "success" %}
-      <div class="row-fluid text-center">
-        <div id="flash_success" class="alert alert-success hy-flash">{{ message[1] }}</div>
+      <div class="hy-toast hy-toast-success" role="status">
+        <span class="hy-toast-ic glyphicon glyphicon-ok" aria-hidden="true"></span>
+        <span class="hy-toast-txt">{{ message[1] }}</span>
       </div>
       {%endif%}
     {% endfor %}
+    </div>
     {% block flash %}{% endblock %}
 
     {# ================================================================
@@ -200,9 +206,7 @@
     <script src="{{ url_for('static', filename='js/libs/jquery.form.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/uploadprogress.js') }}"> </script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {% if current_user.is_anonymous and (page == 'login' or page == 'register') %}
     <script src="{{ url_for('static', filename='js/hanayome.js') }}"></script>
-    {% endif %}
     {% block js %}{% endblock %}
   </body>
 </html>
