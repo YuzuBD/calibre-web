@@ -1562,3 +1562,135 @@ body.hanayome.login #hy-toastzone,
 body.hanayome.register #hy-toastzone {
   top: 18px;
 }
+
+/* ==========================================================================
+   Book detail — readable action bar
+   ========================================================================== */
+body.hanayome .book-meta .btn-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* un-join bootstrap .btn-group siblings: give each its own pill */
+body.hanayome .book-meta .btn-toolbar .btn-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.hanayome .book-meta .btn-toolbar .btn-group .btn-group {
+  display: inline-flex;
+  gap: 0;
+}
+
+/* base action buttons */
+body.hanayome .book-meta .btn-toolbar .btn {
+  border-radius: 999px !important;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1.4;
+  white-space: nowrap;
+  margin: 0 !important;
+  box-shadow: none !important;
+  transition: background .15s ease, color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+body.hanayome .book-meta .btn-toolbar .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -8px rgba(125, 95, 153, .55);
+}
+
+body.hanayome .book-meta .btn-toolbar .btn .glyphicon {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* 'Download :' label button becomes quiet secondary */
+body.hanayome .book-meta .btn-toolbar #Download {
+  background: var(--hy-wisteria-lt);
+  border-color: transparent;
+  color: var(--hy-wisteria-dk);
+}
+
+body.hanayome .book-meta .btn-toolbar #Download:hover {
+  background: var(--hy-wisteria);
+  color: #fff;
+}
+
+/* format buttons: solid primary with clear spacing */
+body.hanayome .book-meta .btn-toolbar a[id^="btnGroupDrop1"],
+body.hanayome .book-meta .btn-toolbar #btnGroupDrop1.dropdown-toggle {
+  background: var(--hy-wisteria);
+  border-color: var(--hy-wisteria);
+  color: #fff;
+}
+
+body.hanayome .book-meta .btn-toolbar a[id^="btnGroupDrop1"]:hover,
+body.hanayome .book-meta .btn-toolbar #btnGroupDrop1.dropdown-toggle:hover {
+  background: var(--hy-wisteria-dk);
+  border-color: var(--hy-wisteria-dk);
+}
+
+/* read-in-browser becomes blossom accent */
+body.hanayome .book-meta .btn-toolbar #readbtn,
+body.hanayome .book-meta .btn-toolbar #read-in-browser {
+  background: var(--hy-blossom);
+  border-color: var(--hy-blossom);
+  color: #fff;
+}
+
+body.hanayome .book-meta .btn-toolbar #readbtn:hover,
+body.hanayome .book-meta .btn-toolbar #read-in-browser:hover {
+  background: #c97490;
+  border-color: #c97490;
+}
+
+/* send to eReader: outline style to reduce clutter */
+body.hanayome .book-meta .btn-toolbar .sendbtn-form,
+body.hanayome .book-meta .btn-toolbar #sendbtn2 {
+  background: transparent;
+  border: 1px solid var(--hy-wisteria);
+  color: var(--hy-wisteria-dk);
+}
+
+body.hanayome .book-meta .btn-toolbar .sendbtn-form:hover,
+body.hanayome .book-meta .btn-toolbar #sendbtn2:hover {
+  background: var(--hy-wisteria-lt);
+  color: var(--hy-wisteria-dk);
+  box-shadow: none;
+}
+
+/* more air between the label and the action pills */
+body.hanayome .book-meta .btn-toolbar #Download {
+  margin-right: 6px !important;
+}
+
+body.hanayome .book-meta .btn-toolbar .btn .glyphicon + * {
+  margin-left: 0;
+}
+
+/* 'Download :' becomes a plain text label, not a competing pill */
+body.hanayome .book-meta .btn-toolbar #Download {
+  background: transparent;
+  border: none;
+  padding: 0 4px 0 0;
+  color: #6b6155;
+  font-weight: 400;
+  font-size: 13.5px;
+  box-shadow: none;
+}
+
+body.hanayome .book-meta .btn-toolbar #Download:hover {
+  background: transparent;
+  color: #6b6155;
+  transform: none;
+  box-shadow: none;
+}
