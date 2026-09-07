@@ -1356,6 +1356,55 @@ def register():
     return render_title_template('register.html', config=config, title=_("Register"), page="register")
 
 
+@web.route('/forgot', methods=['GET'])
+def forgot_password():
+    if config.config_login_type != constants.LOGIN_LDAP:
+        if not config.get_mail_server_configured():
+            flash(_("Email server is not configured, please contact your administrator."), category="error")
+            return redirect(url_for('web.login'))
+        if current_user is not None and current_user.is_authenticated:
+            return redirect(url_for('web.index'))
+        return render_title_template('forgot.html', title=_("Reset password"), page="forgot")
+    abort(404)
+
+
+@web.route('/forgot', methods=['POST'])
+@limiter.limit("40/day", key_func=get_remote_address)
+@limiter.limit("3/hour", key_func=get_remote_address)
+def forgot_password_post():
+    if config.config_login_type == constants.LOGIN_LDAP:
+        abort(404)
+    if current_user is not None and current_user.is_authenticated:
+        return redirect(url_for('web.index'))
+    if not config.get_mail_server_configured():
+        flash(_("Email server is not configured, please contact your administrator."), category="error")
+        return redirect(url_for('web.login'))
+    account = strip_whitespaces(request.form.get('username', "")).lower().replace("\n", "").replace("\r", "")
+    if not account:
+        flash(_("Please enter your username or email"), category="error")
+        return render_title_template('forgot.html', title=_("Reset password"), page="forgot")
+    # Look up by username first, then by email
+    user = ub.session.query(ub.User).filter(func.lower(ub.User.name) == account).first()
+    if user is None and "@" in account:
+        user = ub.session.query(ub.User).filter(func.lower(ub.User.email) == account).first()
+    if user is not None and user.name != "Guest":
+        ret, __ = reset_password(user.id)
+        if ret == 1:
+            log.info('Password reset for user "%s" IP-address: %s', user.name, get_remote_address())
+            flash(_("If the account exists, a new password has been sent to its email address"), category="success")
+        elif ret == 2:
+            log.error("Mail server not configured, cannot reset password")
+            flash(_("Email server is not configured, please contact your administrator."), category="error")
+        else:
+            log.error(u"An unknown error occurred during password reset for user %s", user.name)
+            flash(_(u"An unknown error occurred. Please try again later."), category="error")
+    else:
+        # Never reveal whether an account exists
+        log.info('Password reset requested for unknown account "%s" IP-address: %s', account, get_remote_address())
+        flash(_("If the account exists, a new password has been sent to its email address"), category="success")
+    return redirect(url_for('web.login'))
+
+
 def handle_login_user(user, remember, message, category):
     login_user(user, remember=remember)
     flash(message, category=category)

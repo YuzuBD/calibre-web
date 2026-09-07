@@ -68,7 +68,7 @@
           <span>{{_('Remember Me')}}</span>
         </label>
         {% if config.config_login_type == 0 and mail %}
-        <button type="submit" name="forgot" value="forgot" class="hy-link">{{_('Forgot Password?')}}</button>
+        <a href="{{url_for('web.forgot_password')}}" class="hy-link" id="to-forgot">{{_('Forgot Password?')}}</a>
         {% endif %}
       </div>
 

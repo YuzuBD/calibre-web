@@ -1110,7 +1110,7 @@ body.hanayome .hy-flash{
    Both pages share: hidden chrome, cream canvas, underline fields.
    ========================================================================== */
 body.hanayome.login,
-body.hanayome.register {
+body.hanayome.register, body.hanayome.forgot {
   background:
     radial-gradient(700px 460px at 78% 6%, rgba(217, 139, 166, .09), transparent 60%),
     radial-gradient(560px 420px at 4% 96%, rgba(155, 123, 181, .07), transparent 55%),
@@ -1118,19 +1118,23 @@ body.hanayome.register {
 }
 
 body.hanayome.login .hy-topbar,
-body.hanayome.register .hy-topbar { display: none; }
+body.hanayome.register .hy-topbar,
+body.hanayome.forgot .hy-topbar{ display: none; }
 
 body.hanayome.login .hy-app,
-body.hanayome.register .hy-app {
+body.hanayome.register .hy-app,
+body.hanayome.forgot .hy-app{
   max-width: none;
   padding: 0;
 }
 
 body.hanayome.login .hy-shell,
-body.hanayome.register .hy-shell { display: block; }
+body.hanayome.register .hy-shell,
+body.hanayome.forgot .hy-shell{ display: block; }
 
 body.hanayome.login .hy-stage,
-body.hanayome.register .hy-stage {
+body.hanayome.register .hy-stage,
+body.hanayome.forgot .hy-stage{
   padding: 0;
   width: 100%;
   float: none;
@@ -1138,10 +1142,12 @@ body.hanayome.register .hy-stage {
 
 /* ---------- shared form controls ------------------------------------------ */
 body.hanayome.login .hy-field,
-body.hanayome.register .hy-field { margin-bottom: 24px; }
+body.hanayome.register .hy-field,
+body.hanayome.forgot .hy-field{ margin-bottom: 24px; }
 
 body.hanayome.login .hy-field label,
-body.hanayome.register .hy-field label {
+body.hanayome.register .hy-field label,
+body.hanayome.forgot .hy-field label{
   display: block;
   margin-bottom: 4px;
   font-size: 13px;
@@ -1151,7 +1157,8 @@ body.hanayome.register .hy-field label {
 }
 
 body.hanayome.login .hy-field .hy-input,
-body.hanayome.register .hy-field .hy-input {
+body.hanayome.register .hy-field .hy-input,
+body.hanayome.forgot .hy-field .hy-input{
   display: block;
   width: 100%;
   border: none;
@@ -1166,10 +1173,12 @@ body.hanayome.register .hy-field .hy-input {
 }
 
 body.hanayome.login .hy-field .hy-input::placeholder,
-body.hanayome.register .hy-field .hy-input::placeholder { color: #b3a89a; }
+body.hanayome.register .hy-field .hy-input::placeholder,
+body.hanayome.forgot .hy-field .hy-input::placeholder{ color: #b3a89a; }
 
 body.hanayome.login .hy-field .hy-input:focus,
-body.hanayome.register .hy-field .hy-input:focus {
+body.hanayome.register .hy-field .hy-input:focus,
+body.hanayome.forgot .hy-field .hy-input:focus{
   border-bottom-color: var(--hy-wisteria-dk);
   box-shadow: none;
   outline: none;
@@ -1180,8 +1189,11 @@ body.hanayome.login .hy-field .hy-input:-webkit-autofill,
 body.hanayome.login .hy-field .hy-input:-webkit-autofill:hover,
 body.hanayome.login .hy-field .hy-input:-webkit-autofill:focus,
 body.hanayome.register .hy-field .hy-input:-webkit-autofill,
+body.hanayome.forgot .hy-field .hy-input:-webkit-autofill,
 body.hanayome.register .hy-field .hy-input:-webkit-autofill:hover,
-body.hanayome.register .hy-field .hy-input:-webkit-autofill:focus {
+body.hanayome.forgot .hy-field .hy-input:-webkit-autofill:hover,
+body.hanayome.register .hy-field .hy-input:-webkit-autofill:focus,
+body.hanayome.forgot .hy-field .hy-input:-webkit-autofill:focus{
   -webkit-text-fill-color: #3a3226;
   -webkit-box-shadow: 0 0 0 1000px #faf6f0 inset;
   box-shadow: 0 0 0 1000px #faf6f0 inset;
@@ -1191,13 +1203,16 @@ body.hanayome.register .hy-field .hy-input:-webkit-autofill:focus {
 }
 
 body.hanayome.login .hy-passwrap,
-body.hanayome.register .hy-passwrap { position: relative; }
+body.hanayome.register .hy-passwrap,
+body.hanayome.forgot .hy-passwrap{ position: relative; }
 
 body.hanayome.login .hy-passwrap .hy-input,
-body.hanayome.register .hy-passwrap .hy-input { padding-right: 40px; }
+body.hanayome.register .hy-passwrap .hy-input,
+body.hanayome.forgot .hy-passwrap .hy-input{ padding-right: 40px; }
 
 body.hanayome.login .hy-eye,
-body.hanayome.register .hy-eye {
+body.hanayome.register .hy-eye,
+body.hanayome.forgot .hy-eye{
   position: absolute;
   right: 0;
   top: 0;
@@ -1211,10 +1226,12 @@ body.hanayome.register .hy-eye {
 }
 
 body.hanayome.login .hy-eye:hover,
-body.hanayome.register .hy-eye:hover { color: var(--hy-wisteria-dk); }
+body.hanayome.register .hy-eye:hover,
+body.hanayome.forgot .hy-eye:hover{ color: var(--hy-wisteria-dk); }
 
 body.hanayome.login .hy-login-row,
-body.hanayome.register .hy-login-row {
+body.hanayome.register .hy-login-row,
+body.hanayome.forgot .hy-login-row{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1222,7 +1239,8 @@ body.hanayome.register .hy-login-row {
 }
 
 body.hanayome.login .hy-remember,
-body.hanayome.register .hy-remember {
+body.hanayome.register .hy-remember,
+body.hanayome.forgot .hy-remember{
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1234,7 +1252,8 @@ body.hanayome.register .hy-remember {
 }
 
 body.hanayome.login .hy-remember input,
-body.hanayome.register .hy-remember input {
+body.hanayome.register .hy-remember input,
+body.hanayome.forgot .hy-remember input{
   accent-color: var(--hy-wisteria-dk);
   width: 16px;
   height: 16px;
@@ -1242,7 +1261,8 @@ body.hanayome.register .hy-remember input {
 
 /* submit — small, quiet */
 body.hanayome.login .hy-login-go,
-body.hanayome.register .hy-login-go {
+body.hanayome.register .hy-login-go,
+body.hanayome.forgot .hy-login-go{
   display: inline-block;
   width: auto;
   min-width: 148px;
@@ -1259,14 +1279,16 @@ body.hanayome.register .hy-login-go {
 }
 
 body.hanayome.login .hy-login-go:hover,
-body.hanayome.register .hy-login-go:hover {
+body.hanayome.register .hy-login-go:hover,
+body.hanayome.forgot .hy-login-go:hover{
   background: #3a3226;
   border-color: #3a3226;
   color: #faf6f0;
 }
 
 body.hanayome.login .hy-link,
-body.hanayome.register .hy-link {
+body.hanayome.register .hy-link,
+body.hanayome.forgot .hy-link{
   border: none;
   background: none;
   padding: 0;
@@ -1280,13 +1302,15 @@ body.hanayome.register .hy-link {
 }
 
 body.hanayome.login .hy-link:hover,
-body.hanayome.register .hy-link:hover {
+body.hanayome.register .hy-link:hover,
+body.hanayome.forgot .hy-link:hover{
   color: var(--hy-wisteria-dk);
   text-decoration-color: var(--hy-wisteria-dk);
 }
 
 body.hanayome.login .hy-login-subrow,
-body.hanayome.register .hy-login-subrow {
+body.hanayome.register .hy-login-subrow,
+body.hanayome.forgot .hy-login-subrow{
   display: flex;
   justify-content: flex-start;
   gap: 22px;
@@ -1295,7 +1319,8 @@ body.hanayome.register .hy-login-subrow {
 }
 
 body.hanayome.login .hy-login-error,
-body.hanayome.register .hy-login-error {
+body.hanayome.register .hy-login-error,
+body.hanayome.forgot .hy-login-error{
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1308,7 +1333,8 @@ body.hanayome.register .hy-login-error {
 }
 
 body.hanayome.login .hy-oauth,
-body.hanayome.register .hy-oauth {
+body.hanayome.register .hy-oauth,
+body.hanayome.forgot .hy-oauth{
   display: flex;
   justify-content: flex-start;
   gap: 12px;
@@ -1316,7 +1342,8 @@ body.hanayome.register .hy-oauth {
 }
 
 body.hanayome.login .hy-oauth-btn,
-body.hanayome.register .hy-oauth-btn {
+body.hanayome.register .hy-oauth-btn,
+body.hanayome.forgot .hy-oauth-btn{
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1330,7 +1357,8 @@ body.hanayome.register .hy-oauth-btn {
 }
 
 body.hanayome.login .hy-oauth-btn:hover,
-body.hanayome.register .hy-oauth-btn:hover {
+body.hanayome.register .hy-oauth-btn:hover,
+body.hanayome.forgot .hy-oauth-btn:hover{
   border-color: #3a3226;
   background: rgba(255, 255, 255, .6);
   text-decoration: none;
@@ -1338,7 +1366,8 @@ body.hanayome.register .hy-oauth-btn:hover {
 
 /* quiet flash on auth pages */
 body.hanayome.login .hy-flash.alert,
-body.hanayome.register .hy-flash.alert {
+body.hanayome.register .hy-flash.alert,
+body.hanayome.forgot .hy-flash.alert{
   background: rgba(250, 247, 244, .92);
   border: 1px solid var(--hy-line);
   color: #8a8074;
@@ -1556,7 +1585,8 @@ body.hanayome.login .hy-login-foot-dot { color: #d8cfc4; }
 /* ==========================================================================
    REGISTER page — ultra minimal
    ========================================================================== */
-body.hanayome.register .hy-reg-min {
+body.hanayome.register .hy-reg-min,
+body.hanayome.forgot .hy-reg-min{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -1572,7 +1602,8 @@ body.hanayome.register .hy-reg-min {
   to   { opacity: 1; transform: none; }
 }
 
-body.hanayome.register .hy-reg-brand {
+body.hanayome.register .hy-reg-brand,
+body.hanayome.forgot .hy-reg-brand{
   font-family: var(--hy-font-serif);
   font-size: 21px;
   font-weight: 500;
@@ -1581,7 +1612,8 @@ body.hanayome.register .hy-reg-brand {
   text-decoration: none;
 }
 
-body.hanayome.register .hy-reg-brand::before {
+body.hanayome.register .hy-reg-brand::before,
+body.hanayome.forgot .hy-reg-brand::before{
   content: "";
   display: inline-block;
   width: 9px;
@@ -1592,16 +1624,20 @@ body.hanayome.register .hy-reg-brand::before {
   vertical-align: 1px;
 }
 
-body.hanayome.register .hy-reg-card {
+body.hanayome.register .hy-reg-card,
+body.hanayome.forgot .hy-reg-card{
   width: 100%;
   max-width: 380px;
 }
 
-body.hanayome.register .hy-reg-card .hy-login-form { text-align: left; }
+body.hanayome.register .hy-reg-card .hy-login-form,
+body.hanayome.forgot .hy-reg-card .hy-login-form{ text-align: left; }
 
-body.hanayome.register .hy-reg-card .hy-login-go { display: block; width: 100%; }
+body.hanayome.register .hy-reg-card .hy-login-go,
+body.hanayome.forgot .hy-reg-card .hy-login-go{ display: block; width: 100%; }
 
-body.hanayome.register .hy-reg-title {
+body.hanayome.register .hy-reg-title,
+body.hanayome.forgot .hy-reg-title{
   margin: 0 0 30px;
   font-family: var(--hy-font-serif);
   font-weight: 500;
@@ -1611,13 +1647,28 @@ body.hanayome.register .hy-reg-title {
   text-align: center;
 }
 
-body.hanayome.register .hy-reg-alt {
+body.hanayome.register .hy-reg-alt,
+body.hanayome.forgot .hy-reg-alt {
   margin: 24px 0 0;
   text-align: center;
 }
 
+/* forgot password page — same quiet card, explanatory note */
+body.hanayome.forgot .hy-reg-title { font-size: 26px; }
+body.hanayome.forgot .hy-forgot-note {
+  margin: -18px 0 26px;
+  font-size: 14px;
+  color: var(--hy-ink-soft);
+  text-align: center;
+  line-height: 1.7;
+}
+body.hanayome.forgot .hy-reg-brand::before {
+  background: radial-gradient(circle at 35% 32%, var(--hy-wisteria) 30%, var(--hy-blossom) 100%);
+}
+
 /* flash overlays on register so card centers true */
-body.hanayome.register .hy-flash {
+body.hanayome.register .hy-flash,
+body.hanayome.forgot .hy-flash{
   position: fixed;
   top: 16px;
   left: 50%;
@@ -1754,7 +1805,8 @@ body.hanayome .hy-toast-txt { flex: 1 1 auto; min-width: 0; }
 
 /* toast on auth pages should not fight the centering */
 body.hanayome.login #hy-toastzone,
-body.hanayome.register #hy-toastzone {
+body.hanayome.register #hy-toastzone,
+body.hanayome.forgot #hy-toastzone{
   top: 18px;
 }
 
