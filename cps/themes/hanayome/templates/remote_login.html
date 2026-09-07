@@ -1,18 +1,25 @@
 {% extends theme("layout.html") %}
 {% block body %}
-<div class="well">
+<div class="well hy-rmt-card">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <h2 style="margin-top: 0">{{_('Magic Link - Authorise New Device')}}</h2>
-  <p>
-    {{_('On another device, login and visit:')}}
-  <h4><a id="verify_url" data-token="{{token}}" href="{{verify_url}}">{{verify_url}}</a><b></b>
-  </h4>
-  <p>
-    {{_('Once verified, you will automatically be logged in on this device.')}}
-  </p>
-  <p>
-    {{_('This verification link will expire in 10 minutes.')}}
-  </p>
+  <div class="hy-rmt-head">
+    <span class="hy-rmt-dot" aria-hidden="true"></span>
+    <h2 class="hy-rmt-title">{{_('Magic Link — Authorise New Device')}}</h2>
+  </div>
+
+  <p class="hy-rmt-lead">{{_('On another device, login and visit:')}}</p>
+
+  <div class="hy-rmt-url">
+    <a id="verify_url" data-token="{{token}}" href="{{verify_url}}">{{verify_url}}</a>
+  </div>
+
+  <p class="hy-rmt-note">{{_('Once verified, you will automatically be logged in on this device.')}}</p>
+  <p class="hy-rmt-note hy-rmt-expire">{{_('This verification link will expire in 10 minutes.')}}</p>
+
+  <div class="hy-rmt-wait" role="status" aria-live="polite">
+    <span class="hy-rmt-pulse" aria-hidden="true"></span>
+    <span>{{_('Waiting for approval…')}}</span>
+  </div>
 </div>
 {% endblock %}
 

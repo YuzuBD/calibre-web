@@ -1,19 +1,32 @@
 {% extends theme("layout.html") %}
 {% block body %}
-<div class="well col-sm-6 col-sm-offset-2">
+<div class="well hy-rmt-card">
   <form method="POST" role="form">
-  <h2 style="margin-top: 0">{{ _('Approve Magic Link Login') }}</h2>
-  <p>{{ _('Review the device that requested access before approving this login.') }}</p>
-  <dl class="dl-horizontal">
-    <dt>{{ _('IP address') }}</dt>
-    <dd>{{ request_ip or _('Unknown') }}</dd>
-    <dt>{{ _('Browser') }}</dt>
-    <dd>{{ request_user_agent or _('Unknown') }}</dd>
-  </dl>
-  <p>{{ _('If you approve this request, the device that started it will be logged in as %(username)s.', username=current_user.name) }}</p>
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <button type="submit" class="btn btn-primary">{{ _('Approve Login') }}</button>
-    <a class="btn btn-default" href="{{ url_for('web.index') }}">{{ _('Cancel') }}</a>
+    <div class="hy-rmt-head">
+      <span class="hy-rmt-dot hy-rmt-dot-violet" aria-hidden="true"></span>
+      <h2 class="hy-rmt-title">{{ _('Approve Magic Link Login') }}</h2>
+    </div>
+
+    <p class="hy-rmt-lead">{{ _('Review the device that requested access before approving this login.') }}</p>
+
+    <dl class="hy-rmt-meta">
+      <div class="hy-rmt-meta-row">
+        <dt>{{ _('IP address') }}</dt>
+        <dd>{{ request_ip or _('Unknown') }}</dd>
+      </div>
+      <div class="hy-rmt-meta-row">
+        <dt>{{ _('Browser') }}</dt>
+        <dd>{{ request_user_agent or _('Unknown') }}</dd>
+      </div>
+    </dl>
+
+    <p class="hy-rmt-note">{{ _('If you approve this request, the device that started it will be logged in as %(username)s.', username=current_user.name) }}</p>
+
+    <div class="hy-rmt-actions">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="hy-rmt-approve">{{ _('Approve Login') }}</button>
+      <a class="hy-rmt-cancel" href="{{ url_for('web.index') }}">{{ _('Cancel') }}</a>
+    </div>
   </form>
 </div>
 {% endblock %}
