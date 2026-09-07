@@ -1,0 +1,23 @@
+{% extends theme("layout.html") %}
+{% block body %}
+<div class="well col-sm-6 col-sm-offset-2">
+  <h2 style="margin-top: 0">{{_('Reset password')}}</h2>
+  <p>{{_('Enter your username or email and we will send you a new password.')}}</p>
+  {% if error %}
+  <div class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+    <span>{{ error }}</span>
+  </div>
+  {% endif %}
+  <form method="POST" role="form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-group required">
+      <label for="username">{{_('Username or email')}}</label>
+      <input type="text" class="form-control" id="username" name="username"
+             placeholder="{{_('Username or email')}}" value="{{ username }}" required autofocus>
+    </div>
+    <button type="submit" id="submit" class="btn btn-primary">{{_('Send reset email')}}</button>
+    <a href="{{ url_for('web.login') }}" class="btn btn-default">{{_('Back to login')}}</a>
+  </form>
+</div>
+{% endblock %}
